@@ -43,5 +43,6 @@ const inputFiles = ["Input_01.txt", "Input_02.txt"];
 for (const file of inputFiles) {
     // Main execution logic
 }
+
 This part of the code iterates through the input files specified in the inputFiles array. For each file, it calls processInputFile to find the longest and second longest compounded words and then logs the results to the console.
 Overall, this code efficiently utilizes dynamic programming to determine if a word is compounded and then finds the longest and second longest compounded words from the input files. It provides a clean and modular structure, making it easy to understand and maintain.
