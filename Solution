@@ -1,0 +1,70 @@
+const fs = require("fs");
+
+/**
+ * Function to check if a word is compounded
+ * @param {string} word - The word to check
+ * @param {Set<string>} wordSet - Set of all words
+ * @returns {boolean} - True if word is compounded, otherwise false
+ */
+function isCompounded(word, wordSet) {
+    const n = word.length;
+    const dp = Array(n + 1).fill(false);
+    dp[0] = true;
+
+    for (let i = 1; i <= n; i++) {
+        for (let j = 0; j < i; j++) {
+            if (dp[j] && wordSet.has(word.substring(j, i))) {
+                dp[i] = true;
+                break;
+            }
+        }
+    }
+
+    return dp[n];
+}
+
+/**
+ * Function to find the longest and second longest compounded words
+ * @param {string[]} words - Array of words
+ * @param {Set<string>} wordSet - Set of all words
+ * @returns {string[]} - Array containing the longest and second longest compounded words
+ */
+function findLongestCompoundedWords(words, wordSet) {
+    let longest = "";
+    let secondLongest = "";
+
+    for (const word of words) {
+        if (isCompounded(word, wordSet)) {
+            if (word.length > longest.length) {
+                secondLongest = longest;
+                longest = word;
+            } else if (word.length > secondLongest.length) {
+                secondLongest = word;
+            }
+        }
+    }
+
+    return [longest, secondLongest];
+}
+
+/**
+ * Function to process input file and find longest and second longest compounded words
+ * @param {string} fileName - Path to input file
+ * @returns {string[]} - Array containing the longest and second longest compounded words
+ */
+function processInputFile(fileName) {
+    const words = fs.readFileSync(fileName, "utf-8").split("\n").map(word => word.trim());
+    const wordSet = new Set(words);
+    return findLongestCompoundedWords(words, wordSet);
+}
+
+// -----------------------------------------
+
+const inputFiles = ["Input_01.txt", "Input_02.txt"];
+
+for (const file of inputFiles) {
+    const [longest, secondLongest] = processInputFile(file);
+    console.log(File: ${file});
+    console.log(Longest Compound Word: ${longest});
+    console.log(Second Longest Compound Word: ${secondLongest});
+}
